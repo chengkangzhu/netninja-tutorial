@@ -1,36 +1,31 @@
 const router = require("express").Router();
 const Workout = require("../models/workoutModel");
+const requireAuth = require("../middlewares/requireAuth")
+const {
+	createWorkout,
+	getWorkouts,
+	getWorkout,
+	deleteWorkout,
+	updateWorkout,
+} = require("../controllers/workoutController");
+
+
+//require auth for all workouts
+router.use(requireAuth)
 
 //get all workouts
-router.get("/", (req, res) => {
-	res.json({ mess: "GET all workouts" });
-});
+router.get("/", getWorkouts);
 
 //get one workout
-router.get("/:id", (req, res) => {
-	res.json({ mess: "GET a single workout" });
-});
+router.get("/:id", getWorkout);
 
 //post workout
-router.post("/", async (req, res) => {
-	const { title, reps, load } = req.body;
-
-	try {
-		const workout = await Workout.create({ title, load, reps });
-		res.status(200).json(workout);
-	} catch (error) {
-		res.status(400).json({ error: error.message });
-	}
-});
+router.post("/", createWorkout);
 
 //delete
-router.delete("/:id", (req, res) => {
-	res.json({ mess: "delete a workout" });
-});
+router.delete("/:id", deleteWorkout);
 
 //update a workout
-router.patch("/:id", (req, res) => {
-	res.json({ mess: "update a workout" });
-});
+router.patch("/:id", updateWorkout);
 
 module.exports = router;

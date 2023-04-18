@@ -16,10 +16,12 @@ const WorkoutSchema = new Schema(
 			required: true,
 			type: Number,
 		},
+		user_id: {
+			type: String,
+			required: true,
+		},
 	},
 	{ timestamps: true }
 );
 
-
-module.exports = mongoose.model("Workout",WorkoutSchema)
-
+module.exports = mongoose.model("Workout", WorkoutSchema);
